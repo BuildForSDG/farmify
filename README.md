@@ -4,7 +4,7 @@
 
 A project to double productivity of rural farmers
 
-# Installing and running locally
+## Installing and running locally
 
 Clone the repository
 To work on the Frontend
@@ -17,7 +17,11 @@ To work on the Backend
 From the cloned directory navigate to `packages/farmify-server` 
 Then run `yarn install`
 
-# Test Files
+## Test Files
 
 Ensure to write unit tests for all components or functions 
 All test files must be named in the form `filename.test.js`
+
+### Running Test
+
+To run tests navigate to the root of the repo and run `yarn run test`
