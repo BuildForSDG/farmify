@@ -1,0 +1,18 @@
+{
+  "name": "farmify",
+  "version": "1.0.0",
+  "description": "A project for doubling productivity for rural farmers",
+  "main": "index.js",
+  "repository": "git@github.com:BuildForSDG/farmify.git",
+  "author": "David Salami <wizdave97@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "yarn workspaces run test"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}
