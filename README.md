@@ -35,6 +35,10 @@ To deploy to production run `npm install -g firebase-tools`
 
 Navigate in your terminal to  `farmify-frontend` folder
 
+Run `yarn run build`
+
 Run `firebase login` and login with the project credentials
 
-Run `yarn run deploy`
+Then run `firebase deploy`
+
+You can visit the app after deployment at https://farmify-develop.web.app
