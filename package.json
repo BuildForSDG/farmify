@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "lint": "eslint . --cache --fix --ext js,jsx,ts,tsx,md",
-    "test": "yarn run lint && yarn workspaces run test"
+    "test": "yarn run lint && yarn workspaces run test",
+    "start": "yarn run node ./packages/farmify-server/bin/www"
   },
   "workspaces": [
     "packages/*"
