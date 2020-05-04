@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint . --cache --fix --ext js,jsx,ts,tsx,md",
     "test": "yarn run lint && yarn workspaces run test",
-    "start": "yarn run node ./packages/farmify-server/bin/www"
+    "start": "node ./packages/farmify-server/bin/www"
   },
   "workspaces": [
     "packages/*"
@@ -27,5 +27,9 @@
     "eslint-plugin-react": "7.19.0",
     "eslint-plugin-react-hooks": "2.5.0",
     "prettier-eslint": "^9.0.1"
+  },
+  "engines": {
+    "node": "12.16.1",
+    "yarn": "1.22.4"
   }
 }

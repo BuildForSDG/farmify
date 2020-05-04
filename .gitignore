@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+/packages/farmify-frontend/build/**/*
 
 # misc
 .DS_Store

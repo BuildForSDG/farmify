@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "start:dev":"nodemon ./bin/www",
     "test":"jest"
   },
   "dependencies": {
@@ -16,5 +17,9 @@
   },
   "jest":{
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": "12.16.1",
+    "yarn": "1.22.4"
   }
 }
