@@ -1,35 +1,62 @@
 {
-  "name": "farmify",
-  "version": "1.0.0",
-  "description": "A project for doubling productivity for rural farmers",
-  "main": "index.js",
-  "repository": "git@github.com:BuildForSDG/farmify.git",
-  "author": "David Salami <wizdave97@gmail.com>",
-  "license": "MIT",
+  "name": "farmify-server",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "node ./bin/www",
+    "start:dev": "nodemon ./bin/www",
     "lint": "eslint . --cache --fix --ext js,jsx,ts,tsx,md",
-    "test": "yarn run lint && yarn workspaces run test",
-    "start": "node ./packages/farmify-server/bin/www"
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "pretest": "cross-env NODE_ENV=test node pre-test.js"
   },
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {},
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-plugin-import": "2.20.1",
-    "eslint-plugin-jest": "^23.8.2",
-    "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-markdown": "^2.0.0-alpha.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-react": "7.19.0",
-    "eslint-plugin-react-hooks": "2.5.0",
-    "prettier-eslint": "^9.0.1"
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-validator": "^6.4.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jest": "24.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "~1.9.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "pg": "^8.0.3"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "<rootDir>/**/*.{js}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/"
+    ],
+    "coverageDirectory": "<rootDir>/coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    },
+    "testEnvironment": "node"
   },
   "engines": {
     "node": "12.16.1",
     "yarn": "1.22.4"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "supertest": "^4.0.2",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.9.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-markdown": "2.0.0-alpha.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "nyc": "^15.0.1",
+    "prettier-eslint": "^9.0.1"
   }
 }
