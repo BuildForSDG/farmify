@@ -4,7 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-require('dotenv').config()
+const connectFlash = require('connect-flash');
+require('dotenv').config();
+require('./lib/passport.config');
+const passport = require('passport');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -21,6 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
