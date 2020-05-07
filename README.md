@@ -8,17 +8,7 @@ A project to double productivity of rural farmers
 
 Clone the repository
 
-At the root of the repo run `yarn install -W` to install overall dependencies
-
-To work on the Frontend
-
-From the cloned directory navigate to `packages/farmify-frontend` 
-Then run `yarn install`
-
-To work on the Backend
-
-From the cloned directory navigate to `packages/farmify-server` 
-Then run `yarn install`
+At the root of the repo run `yarn install`
 
 ## Test Files
 
@@ -29,16 +19,5 @@ All test files must be named in the form `filename.test.js`
 
 To run tests navigate to the root of the repo and run `yarn run test`
 
-## Deploying Frontend to Production
-
-To deploy to production run `npm install -g firebase-tools`
-
-Navigate in your terminal to  `farmify-frontend` folder
-
-Run `yarn run build`
-
-Run `firebase login` and login with the project credentials
-
-Then run `firebase deploy`
 
 You can visit the app after deployment at https://farmify-develop.web.app
