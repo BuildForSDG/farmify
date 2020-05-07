@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/register', [
   check('firstName').isString().isLength({ min: 3 }).trim()
     .escape(),
-  check('firstName').isString().isLength({ min: 3 }).trim()
+  check('lastName').isString().isLength({ min: 3 }).trim()
     .escape(),
   check('email').isEmail().normalizeEmail(),
   check('phone').isLength({ min: 11, max: 11 }).trim().escape(),
