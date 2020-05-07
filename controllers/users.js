@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const passport = require('passport');
 const debug = require('debug')('farmify-server:server');
 const db = require('../db');
-const { hash, generateToken} = require('../lib/helpers');
+const { hash, generateToken } = require('../lib/helpers');
 
 
 module.exports = {
@@ -53,25 +53,22 @@ module.exports = {
       });
     }
   },
-  login(req, res, next){
+  login(req, res, next) {
     try
     {
-      passport.authenticate('local',function(err, user, info){
+      passport.authenticate('local', (err, user, info) => {
         if (err)
         {
-          return res.status(500).send({error: 'Unable to verify user at this time'})
+          return res.status(500).send({ error: 'Unable to verify user at this time' });
         }
         if (user)
         {
           generateToken(res, user.id, user.firstName);
-          res.status(200).send({user});
+          return res.status(200).send({ user });
         }
-        else
-        {
-          res.status(401).send({error: 'Invalid username or password'})
-        }
+
+        return res.status(401).send({ error: 'Invalid username or password' });
       })(req, res, next);
-      
     }
     catch (err)
     {
@@ -80,5 +77,5 @@ module.exports = {
         error: 'An internal server error occured',
       });
     }
-  }
+  },
 };

@@ -25,9 +25,9 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     'https://farmify-develop.web.app',
-    'http://localhost:3000'
+    'http://localhost:3000',
   ],
-  credentials: true
+  credentials: true,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());

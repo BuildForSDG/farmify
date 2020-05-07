@@ -28,7 +28,7 @@ describe('User registration endpoint', () => {
     }, body, (err, res, resBody) => {
       if (err)
       {
-        //console.log(err)
+        // console.log(err)
         throw new Error(err);
       }
       expect(res.statusCode).toEqual(200);
@@ -58,8 +58,8 @@ describe('User registration endpoint', () => {
     });
   });
 });
- describe('User Login Endpoint',function() {
-   it('should login the user successfully', function(done) {
+describe('User Login Endpoint', () => {
+  it('should login the user successfully', (done) => {
     const body = {
       email: 'wizdave97@gmail.com',
       password: 'valerianSpace2@',
@@ -76,8 +76,8 @@ describe('User registration endpoint', () => {
       expect(JSON.parse(resBody).user).toBeDefined();
       done();
     });
-   })
-   it('should not login unauthorized user', function(done) {
+  });
+  it('should not login unauthorized user', (done) => {
     const body = {
       email: 'example@gmail.com',
       password: 'valerianSpace2@',
@@ -94,6 +94,5 @@ describe('User registration endpoint', () => {
       expect(JSON.parse(resBody).user).toBeUndefined();
       done();
     });
-   })
-  
+  });
 });

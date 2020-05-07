@@ -1,7 +1,8 @@
 const express = require('express');
 const { check } = require('express-validator');
-const users = require('../controllers/users.js');
 const passport = require('passport');
+const users = require('../controllers/users.js');
+
 const router = express.Router();
 
 /* GET users listing. */
@@ -25,10 +26,10 @@ router.post('/register', [
     .escape(),
 ], users.register);
 
-router.post('/login',[
+router.post('/login', [
   check('email').isEmail().normalizeEmail(),
   check('password').isAscii().isLength({ min: 8, max: 16 }).trim()
     .escape(),
-], users.login)
+], users.login);
 
 module.exports = router;
