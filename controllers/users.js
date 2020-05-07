@@ -30,8 +30,8 @@ module.exports = {
           (err, response) => {
             if (err)
             {
-              debug(err);
-              res.status(500).send({ error: 'Error occured while creating the account' });
+              console.log(err);
+              res.status(500).send({ error: 'Error occured while creating the account'});
               return;
             }
             res.status(200).send({ success: 'registration successful' });
@@ -46,7 +46,7 @@ module.exports = {
     }
     catch (err)
     {
-      debug(err);
+      console.log(err);
       res.status(500).send({
         error: 'An internal server error occured',
       });
@@ -63,7 +63,7 @@ module.exports = {
       passport.authenticate('local', (err, user, info) => {
         if (err)
         {
-          return res.status(500).send({ error: 'Unable to verify user at this time' });
+          return res.status(500).send({ error: 'Unable to verify user at this time', });
         }
         if (user)
         {
