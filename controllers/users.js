@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
 const { validationResult } = require('express-validator');
+const passport = require('passport');
 const debug = require('debug')('farmify-server:server');
 const db = require('../db');
-const { hash } = require('../lib/helpers');
+const { hash, generateToken} = require('../lib/helpers');
 
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
       const errors = validationResult(req);
       if (!errors.isEmpty())
       {
-        res.status(422).send({ errors: errors.array() });
+        res.status(422).send({ error: errors.array() });
       }
       else
       {
@@ -31,7 +32,7 @@ module.exports = {
             if (err)
             {
               debug(err);
-              res.status(500).send({ errors: 'Error occured while creating the account' });
+              res.status(500).send({ error: 'Error occured while creating the account' });
               return;
             }
             res.status(200).send({ success: 'registration successful' });
@@ -39,7 +40,7 @@ module.exports = {
         }
         else
         {
-          res.status(500).send({ errors: 'Error occured while creating the account' });
+          res.status(500).send({ error: 'Error occured while creating the account' });
           return;
         }
       }
@@ -48,8 +49,36 @@ module.exports = {
     {
       debug(err);
       res.status(500).send({
-        errors: 'An internal server error occured',
+        error: 'An internal server error occured',
       });
     }
   },
+  login(req, res, next){
+    try
+    {
+      passport.authenticate('local',function(err, user, info){
+        if (err)
+        {
+          return res.status(500).send({error: 'Unable to verify user at this time'})
+        }
+        if (user)
+        {
+          generateToken(res, user.id, user.firstName);
+          res.status(200).send({user});
+        }
+        else
+        {
+          res.status(401).send({error: 'Invalid username or password'})
+        }
+      })(req, res, next);
+      
+    }
+    catch (err)
+    {
+      debug(err);
+      res.status(500).send({
+        error: 'An internal server error occured',
+      });
+    }
+  }
 };
