@@ -5,7 +5,6 @@ const debug = require('debug')('farmify-server:server');
 const db = require('../db');
 const { hash, generateToken } = require('../lib/helpers');
 
-
 module.exports = {
   register: (req, res, next) =>
   {
@@ -56,6 +55,11 @@ module.exports = {
   login(req, res, next) {
     try
     {
+      const errors = validationResult(req);
+      if (!errors.isEmpty())
+      {
+        return res.status(400).send({ error: errors.array() });
+      }
       passport.authenticate('local', (err, user, info) => {
         if (err)
         {
@@ -75,7 +79,7 @@ module.exports = {
       debug(err);
       res.status(500).send({
         error: 'An internal server error occured',
-      });
+      })
     }
   },
-};
+}

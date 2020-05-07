@@ -58,8 +58,9 @@ describe('User registration endpoint', () => {
     });
   });
 });
-describe('User Login Endpoint', () => {
-  it('should login the user successfully', (done) => {
+
+ describe('User Login Endpoint',function() {
+   it('should login the user successfully', function(done) {
     const body = {
       email: 'wizdave97@gmail.com',
       password: 'valerianSpace2@',
@@ -76,8 +77,8 @@ describe('User Login Endpoint', () => {
       expect(JSON.parse(resBody).user).toBeDefined();
       done();
     });
-  });
-  it('should not login unauthorized user', (done) => {
+   })
+   it('should not login unauthorized user', function(done) {
     const body = {
       email: 'example@gmail.com',
       password: 'valerianSpace2@',
@@ -94,5 +95,6 @@ describe('User Login Endpoint', () => {
       expect(JSON.parse(resBody).user).toBeUndefined();
       done();
     });
-  });
+   })
+  
 });
