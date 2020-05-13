@@ -1,5 +1,6 @@
 const express = require('express');
 const { body, query } = require('express-validator');
+const passport = require('passport');
 const store = require('../controllers/store');
 
 const router = express.Router();
@@ -18,7 +19,7 @@ router.post('/product', [
   body('availability', 'availability date is required').isString().trim().escape(),
   body('stock', 'available stock value is required').isNumeric(),
   body('price', 'price per unit is required').isNumeric(),
-], store.postProduct);
+], passport.authenticate('jwt'), store.postProduct);
 
 router.get('/search', store.searchProduct);
 
