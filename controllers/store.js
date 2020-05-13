@@ -35,9 +35,9 @@ module.exports = {
         res.status(200).send({
           data: result.rows,
           nextPage: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? `http://localhost:3000/store/all?page=${nextPage}&filter=${filter}`
-            : `https://?page=${nextPage}&filter=${filter}`,
+            : `https://calm-eyrie-12411.herokuapp.com/products/all?page=${nextPage}&filter=${filter}`,
           prevPage: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? `http://localhost:3000/store/all?page=${prevPage}&filter=${filter}`
-            : `https://?page=${prevPage}&filter=${filter}`,
+            : `https://calm-eyrie-12411.herokuapp.com/products/all?page=${prevPage}&filter=${filter}`,
 
         });
         return null;
