@@ -10,7 +10,7 @@
 
 // eslint-disable-next-line import/order
 const app = require('../app');
-const debug = require('debug')('view-pug:server');
+const debug = require('debug')('farmify-server:server');
 const http = require('http');
 
 /**
