@@ -11,7 +11,7 @@ module.exports = {
     try
     {
       const {
-        firstName, lastName, email, phone, password, address, city, state, country, userType,
+        firstname, lastname, email, phone, password, address, city, state, country, usertype,
       } = req.body;
       const errors = validationResult(req);
       if (!errors.isEmpty())
@@ -23,10 +23,10 @@ module.exports = {
         const hashedPassword = hash(password);
         if (hashedPassword)
         {
-          db.query(`INSERT INTO users (firstName, lastName, email, phone, password, address, city, state, country, userType)
+          db.query(`INSERT INTO users (firstname, lastname, email, phone, password, address, city, state, country, usertype)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-          [firstName, lastName, email, phone, hashedPassword, address, city, state,
-            country, userType],
+          [firstname, lastname, email, phone, hashedPassword, address, city, state,
+            country, usertype],
           (err, response) => {
             if (err)
             {

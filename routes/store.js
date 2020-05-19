@@ -57,7 +57,7 @@ const upload = multer({
 
 function checkFile(req, res, next) {
   if (req.file) next();
-  else next(new multer.MulterError(400, 'Product image was not uploaded, it is required'));
+  else next(new multer.MulterError(400, 'product image was not uploaded, it is required'));
 }
 const router = express.Router();
 
@@ -67,7 +67,7 @@ router.get('/all', [
   query('page').isNumeric().trim().escape(),
 ], store.fetchAll);
 
-router.post('/product', upload.single('productImage'), checkFile, [
+router.post('/product', upload.single('product_image'), checkFile, [
   body('name', 'product name is required').isString().trim().escape(),
   body('category', 'product category is required').isString().trim().escape(),
   body('farmer_id', 'farmer_id is required').isNumeric(),

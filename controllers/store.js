@@ -69,7 +69,7 @@ module.exports = {
           res.status(401).send({ error: 'unuthorized access' });
           return null;
         }
-        if (!err && user.userType !== 1)
+        if (!err && user.usertype !== 1)
         {
           res.status(401).send({ error: 'Only farmers can upload products' });
           return null;
@@ -82,7 +82,7 @@ module.exports = {
             return null;
           });
           errors = errors.array();
-          errors.push(req.file ? null : { productImage: 'product image is required' });
+          errors.push(req.file ? null : { product_image: 'product image is required' });
           res.status(400).send({ error: errors });
           return null;
         }
