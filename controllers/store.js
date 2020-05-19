@@ -71,6 +71,10 @@ module.exports = {
         }
         if (!err && user.usertype !== 1)
         {
+          fs.unlink(req.file.path, (err) => {
+            if (err) debug('Unable to delete file');
+            return null;
+          });
           res.status(401).send({ error: 'Only farmers can upload products' });
           return null;
         }
