@@ -19,12 +19,12 @@ module.exports = {
       let params = [filter, offset, limit];
       if (errors.isEmpty())
       {
-        query = 'SELECT *, COUNT(*) FROM products WHERE category in ($1)  GROUP BY id, name, category, farmer_id, available, availability, stock, price ORDER BY name OFFSET  $2 LIMIT  $3';
+        query = 'SELECT *, COUNT(*) FROM products WHERE category in ($1)  GROUP BY id, name, category, farmer_id, available, availability, stock, price, img_url ORDER BY name OFFSET  $2 LIMIT  $3';
       }
       else
       {
         params = [offset, limit];
-        query = 'SELECT *, COUNT(*) FROM products GROUP BY id, name, category, farmer_id, available, availability, stock, price ORDER BY name OFFSET $1 LIMIT  $2';
+        query = 'SELECT *, COUNT(*) FROM products GROUP BY id, name, category, farmer_id, available, availability, stock, price, img_url ORDER BY name OFFSET $1 LIMIT  $2';
       }
       db.query(query, params, (err, result) => {
         if (err)
@@ -67,6 +67,11 @@ module.exports = {
             return null;
           });
           res.status(401).send({ error: 'unuthorized access' });
+          return null;
+        }
+        if (!err && user.userType !== 1)
+        {
+          res.status(401).send({ error: 'Only farmers can upload products' });
           return null;
         }
         let errors = validationResult(req);
