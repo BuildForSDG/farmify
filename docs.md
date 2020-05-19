@@ -95,18 +95,18 @@ page : `number`
 Response body  
 `Content-Type`: `application/json`  
 `body: {   
-    \tdata: {  
-        t\tname: `string`,  
-        \t\tcategory: `string`,  
-        \t\tfarmer_id: `integer`,  
-        \t\tavailable: `boolean`,  
-        \t\tavailability: `date or null`,  
-        \t\tstock: `number`,  
-        \t\tprice: `number`,  
-        \t\timg_url: `URL`  
-    \t},  
-    \tnextPage: `URL address`,  
-    \tprevPage: `URL address`  
+        data: {  
+            name: `string`,  
+            category: `string`,  
+            farmer_id: `integer`,  
+            available: `boolean`,  
+            availability: `date or null`,  
+            stock: `number`,  
+            price: `number`,  
+            img_url: `URL`  
+        },  
+        nextPage: `URL address`,  
+        prevPage: `URL address`  
 }`,
 
 ### Response on failure
@@ -115,7 +115,7 @@ Response body
 `Content-Type`: `application/json`  
  Response body  
  body:{  
-     \terror:`string`  
+         error:`string`  
  }
 ------------------------------------------------------------------------------------------
 ## products/all
@@ -150,7 +150,7 @@ productImage:`FILE`
 `Content-Type`: `application/json`  
  Response body  
  body:{  
-     \terror:`array | string`  
+         error:`array | string`  
  }
 
 
