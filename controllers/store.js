@@ -1,5 +1,9 @@
+/* eslint-disable no-shadow */
 /* eslint-disable camelcase */
 const { validationResult } = require('express-validator');
+const multer = require('multer');
+const fs = require('fs');
+const passport = require('passport');
 const debug = require('debug')('farmify-server:server');
 const db = require('../db');
 
@@ -51,36 +55,63 @@ module.exports = {
     }
   },
 
+  // eslint-disable-next-line consistent-return
   postProduct(req, res, next) {
     try
     {
-      const errors = validationResult(req);
-      if (!errors.isEmpty())
-      {
-        res.status(400).send({ error: errors.array() });
-        return null;
-      }
-      const {
-        name, category, farmer_id, availability, available, stock, price,
-      } = req.body;
-      res.setHeader('Content-Type', 'application/json');
-      db.query('INSERT INTO products (name, category, farmer_id, available, availability, stock, price) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-        [name, category, farmer_id, available, availability, stock, price],
-        (err, result) => {
-          if (err)
-          {
-            res.status(500).send({ error: 'An error occured while adding new products' });
+      passport.authenticate('jwt', (err, user, info) => {
+        if (err)
+        {
+          fs.unlink(req.file.path, (err) => {
+            if (err) debug('Unable to delete file');
             return null;
-          }
-          res.sendStatus(204);
+          });
+          res.status(401).send({ error: 'unuthorized access' });
           return null;
-        });
-      return null;
+        }
+        let errors = validationResult(req);
+        if (!errors.isEmpty() || !req.file)
+        {
+          fs.unlink(req.file.path, (err) => {
+            if (err) debug('Unable to delete file');
+            return null;
+          });
+          errors = errors.array();
+          errors.push(req.file ? null : { productImage: 'product image is required' });
+          res.status(400).send({ error: errors });
+          return null;
+        }
+        const {
+          name, category, farmer_id, availability, available, stock, price,
+        } = req.body;
+        const img_url = `https://calm-eyrie-12411.herokuapp.com/${req.file.path}`;
+        res.setHeader('Content-Type', 'application/json');
+        db.query('INSERT INTO products (name, category, farmer_id, available, availability, stock, price, img_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+          [name, category, farmer_id, available, availability, stock, price, img_url],
+          (err, result) => {
+            if (err)
+            {
+              fs.unlink(req.file.path, (err) => {
+                if (err) debug('Unable to delete file');
+                return null;
+              });
+              res.status(500).send({ error: 'An error occured while adding new products' });
+              return null;
+            }
+            res.sendStatus(204);
+            return null;
+          });
+        return null;
+      })(req, res, next);
     }
     catch (err)
     {
       debug(err);
       console.log(err);
+      fs.unlink(req.file.path, (err) => {
+        if (err) debug('Unable to delete file');
+        return null;
+      });
       res.status(500).send({ error: 'An unknown error occurred while adding new product' });
       return null;
     }
