@@ -11,32 +11,32 @@
 
 ### Required fields
 
-firstName: `string`\\s\\s
-lastName : `string`\\s\\s
-email    : `string`\\s\\s
-phone    : `string, minLength: 11, maxLength: 11`\\s\\s
-password : `string, minLength: 8, maxLength: 16`\\s\\s
-city     : `string`\\s\\s
-state    : `string`\\s\\s
-address  : `string`\\s\\s
-country  : `string`\\s\\s
-userType : `0:for buyers || 1: for farmers || 2: for services`\\s\\s
+firstName: `string`  
+lastName : `string`  
+email    : `string`  
+phone    : `string, minLength: 11, maxLength: 11`  
+password : `string, minLength: 8, maxLength: 16`  
+city     : `string`  
+state    : `string`  
+address  : `string`  
+country  : `string`  
+userType : `0:for buyers || 1: for farmers || 2: for services`  
 
 ### Response on success
 
-statusCode: `200`\\s\\s
-JSON response\\s\\s
-body: { user :{...}}\\s\\s
+statusCode: `200`  
+JSON response  
+body: { user :{...}}  
 
-Users should be redirected to the login page after successful registration\\s\\s
+Users should be redirected to the login page after successful registration  
 
 ### Response on failure
 
-statusCode: `400`\\s\\s
-Invalid or incomplete parameters\\s\\s
+statusCode: `400`  
+Invalid or incomplete parameters  
 
-statusCode: `500`\\s\\s
-Server Error\\s\\s
+statusCode: `500`  
+Server Error  
 ------------------------------------------------------------------------------------------
 ## users/login
 
@@ -50,28 +50,28 @@ Server Error\\s\\s
 
 ### Required Fields
  
-email    : `string`\\s\\s
-password : `string, minLength: 8, maxLength: 16`\\s\\s
+email    : `string`  
+password : `string, minLength: 8, maxLength: 16`  
 
 ### Response on success
 
-`statusCode`: `200`\\s\\s
-`httpOnlyCookie`\\s\\s
+`statusCode`: `200`  
+`httpOnlyCookie`  
 
-Response body\\s\\s
-`Content-Type`: `application/json`\\s\\s
-`body: { user: {...}}`,\\s\\s
+Response body  
+`Content-Type`: `application/json`  
+`body: { user: {...}}`,  
 
 ### Response on failure
 
-`statusCode`: `401`\\s\\s
-`Invalid username or password`\\s\\s
+`statusCode`: `401`  
+`Invalid username or password`  
 
-`statusCode`: `400`\\s\\s
-`Invalid or incomplete parameters`\\s\\s
+`statusCode`: `400`  
+`Invalid or incomplete parameters`  
 
-`statusCode`: `500`\\s\\s
-`Server Error`\\s\\s
+`statusCode`: `500`  
+`Server Error`  
 ------------------------------------------------------------------------------------------
 ## products/all
 
@@ -85,37 +85,37 @@ Response body\\s\\s
 
 ### Optional Query Params
  
-filter   : `comma separated string`\\s\\s
-page : `number`\\s\\s
+filter   : `comma separated string`  
+page : `number`  
 
 ### Response on success
 
-`statusCode`: `200`\\s\\s
+`statusCode`: `200`  
 
-Response body\\s\\s
-`Content-Type`: `application/json`\\s\\s
-`body: { \\s\\s
-    \tdata: {\\s\\s
-        t\tname: `string`,\\s\\s
-        \t\tcategory: `string`,\\s\\s
-        \t\tfarmer_id: `integer`,\\s\\s
-        \t\tavailable: `boolean`,\\s\\s
-        \t\tavailability: `date or null`,\\s\\s
-        \t\tstock: `number`,\\s\\s
-        \t\tprice: `number`,\\s\\s
-        \t\timg_url: `URL`\\s\\s
-    \t},\\s\\s
-    \tnextPage: `URL address`,\\s\\s
-    \tprevPage: `URL address`\\s\\s
+Response body  
+`Content-Type`: `application/json`  
+`body: {   
+    \tdata: {  
+        t\tname: `string`,  
+        \t\tcategory: `string`,  
+        \t\tfarmer_id: `integer`,  
+        \t\tavailable: `boolean`,  
+        \t\tavailability: `date or null`,  
+        \t\tstock: `number`,  
+        \t\tprice: `number`,  
+        \t\timg_url: `URL`  
+    \t},  
+    \tnextPage: `URL address`,  
+    \tprevPage: `URL address`  
 }`,
 
 ### Response on failure
 
-`statusCode`: `400 || 500`\\s\\s
-`Content-Type`: `application/json`\\s\\s
- Response body\\s\\s
- body:{\\s\\s
-     \terror:`string`\\s\\s
+`statusCode`: `400 || 500`  
+`Content-Type`: `application/json`  
+ Response body  
+ body:{  
+     \terror:`string`  
  }
 ------------------------------------------------------------------------------------------
 ## products/all
@@ -126,19 +126,19 @@ Response body\\s\\s
 
 ### Headers
 
-`Content-Type` : `multipart/form-data`\\s\\s
-Request must be sent with `httpOnly` cookies gotten from login\\s\\s
-User sending request to this route must be a farmer\\s\\s
+`Content-Type` : `multipart/form-data`  
+Request must be sent with `httpOnly` cookies gotten from login  
+User sending request to this route must be a farmer  
 ### Required body Params
 
-name: `string`,\\s\\s
-category: `string`,\\s\\s
-farmer_id: `integer`,\\s\\s
-available: `boolean`,\\s\\s
-availability: `date or null`,\\s\\s
-stock: `number`,\\s\\s
-price: `number`,\\s\\s
-productImage:`FILE`\\s\\s
+name: `string`,  
+category: `string`,  
+farmer_id: `integer`,  
+available: `boolean`,  
+availability: `date or null`,  
+stock: `number`,  
+price: `number`,  
+productImage:`FILE`  
 
 ### Response on success
 
@@ -146,11 +146,11 @@ productImage:`FILE`\\s\\s
 
 ### Response on failure
 
-`statusCode`: `400 || 500`\\s\\s
-`Content-Type`: `application/json`\\s\\s
- Response body\\s\\s
- body:{\\s\\s
-     \terror:`array | string`\\s\\s
+`statusCode`: `400 || 500`  
+`Content-Type`: `application/json`  
+ Response body  
+ body:{  
+     \terror:`array | string`  
  }
 
 
