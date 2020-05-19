@@ -4,13 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const connectFlash = require('connect-flash');
+const multer = require('multer');
 require('dotenv').config();
 require('./lib/passport.config');
 const passport = require('passport');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const storeRouter = require('./routes/store');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/products', storeRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -42,6 +44,11 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError)
+  {
+    res.status(400).send({ error: 'Product image is required and must be an png or jpeg or jpg file' });
+    return null;
+  }
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -49,6 +56,7 @@ app.use((err, req, res, next) => {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+  return null;
 });
 
 module.exports = app;
