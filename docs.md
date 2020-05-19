@@ -11,8 +11,8 @@
 
 ### Required fields  
 
-firstName: `string`  
-lastName : `string`  
+firstname: `string`  
+lastname : `string`  
 email    : `string`  
 phone    : `string, minLength: 11, maxLength: 11`  
 password : `string, minLength: 8, maxLength: 16`  
@@ -20,7 +20,7 @@ city     : `string`
 state    : `string`  
 address  : `string`  
 country  : `string`  
-userType : `0:for buyers || 1: for farmers || 2: for services`  
+usertype : `0:for buyers || 1: for farmers || 2: for services`  
 
 ### Response on success  
 
@@ -140,7 +140,7 @@ available: `boolean`,
 availability: `date or null`,  
 stock: `number`,  
 price: `number`,  
-productImage:`FILE`  
+product_image:`FILE`  
 
 ### Response on success
 
