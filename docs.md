@@ -1,15 +1,15 @@
 # API Documentation
 
-## users/register
+## users/register  
 
-### Accepted Methods
+### Accepted Methods  
 
 `POST`
-### Headers
+### Headers  
 
 `Content-Type` : `application/json` 
 
-### Required fields
+### Required fields  
 
 firstName: `string`  
 lastName : `string`  
@@ -22,7 +22,7 @@ address  : `string`
 country  : `string`  
 userType : `0:for buyers || 1: for farmers || 2: for services`  
 
-### Response on success
+### Response on success  
 
 statusCode: `200`  
 JSON response  
@@ -30,7 +30,7 @@ body: { user :{...}}
 
 Users should be redirected to the login page after successful registration  
 
-### Response on failure
+### Response on failure  
 
 statusCode: `400`  
 Invalid or incomplete parameters  
@@ -62,7 +62,7 @@ Response body
 `Content-Type`: `application/json`  
 `body: { user: {...}}`,  
 
-### Response on failure
+### Response on failure  
 
 `statusCode`: `401`  
 `Invalid username or password`  
@@ -94,31 +94,33 @@ page : `number`
 
 Response body  
 `Content-Type`: `application/json`  
-`body: {   
-        data: {  
-            name: `string`,  
-            category: `string`,  
-            farmer_id: `integer`,  
-            available: `boolean`,  
-            availability: `date or null`,  
-            stock: `number`,  
-            price: `number`,  
-            img_url: `URL`  
-        },  
-        nextPage: `URL address`,  
-        prevPage: `URL address`  
-}`,
+`body: {    
+        data: {    
+            name: `string`,    
+            category: `string`,    
+            farmer_id: `integer`,   
+            available: `boolean`,    
+            availability: `date or null`,    
+            stock: `number`,    
+            price: `number`,    
+            img_url: `URL`    
+        },    
+        nextPage: `URL address`,    
+        prevPage: `URL address`    
+}`,  
 
-### Response on failure
+### Response on failure  
 
 `statusCode`: `400 || 500`  
+
 `Content-Type`: `application/json`  
+
  Response body  
  body:{  
          error:`string`  
  }
 ------------------------------------------------------------------------------------------
-## products/all
+## products/product
 
 ### Accepted Methods
 
@@ -144,7 +146,7 @@ productImage:`FILE`
 
 `statusCode`: `204`
 
-### Response on failure
+### Response on failure  
 
 `statusCode`: `400 || 500`  
 `Content-Type`: `application/json`  
