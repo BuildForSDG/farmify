@@ -59,7 +59,7 @@ module.exports = {
   postProduct(req, res, next) {
     try
     {
-      passport.authenticate('jwt', (err, user, info) => {
+      passport.authenticate('jwt', { session: false }, (err, user, info) => {
         if (err)
         {
           fs.unlink(req.file.path, (err) => {
