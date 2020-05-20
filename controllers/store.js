@@ -19,10 +19,10 @@ module.exports = {
       const limit = 20;
       const errors = validationResult(req);
       priceArray = price.split(',');
-      const params = [`%${category || ''}%`, price ? priceArray[0] : 0, price ? priceArray[1] : 500000, `%${city || ''}%`, `%${state || ''}%`, offset, limit];
+      const params = [`%${category || ''}%`, priceArray && priceArray.length >= 2 ? +priceArray[0].trim() : 0, priceArray && priceArray.length >= 2 ? +priceArray[1].trim() : 500000, `%${city || ''}%`, `%${state || ''}%`, offset, limit];
       const query = `SELECT products.id, name, category, farmer_id, available, availability, stock, price, img_url, COUNT(*) FROM products JOIN users ON products.farmer_id = users.id WHERE products.id >= 0
                AND category LIKE $1
-               AND (price >= $2 OR price <= $3)
+               AND (price >= $2 AND price <= $3)
                AND city LIKE $4
                AND state LIKE $5 
                GROUP BY products.id, users.id, name, category, farmer_id, available, availability, stock, price, img_url ORDER BY name OFFSET  $6 LIMIT  $7`;
@@ -96,7 +96,7 @@ module.exports = {
         const {
           name, category, farmer_id, availability, available, stock, price,
         } = req.body;
-        const filePath = req.file.path.replace(new RegExp(`[\\${path.sep}]`, 'g'), '/').match(/public[/\w+-\d+.]+/g)[0];
+        const filePath = req.file.path.replace(new RegExp(`[\\${path.sep}]`, 'g'), '/').match(/images[/\w+-\d+.]+/g)[0];
         const img_url = `https://calm-eyrie-12411.herokuapp.com/${filePath}`;
         res.setHeader('Content-Type', 'application/json');
         db.query('INSERT INTO products (name, category, farmer_id, available, availability, stock, price, img_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
