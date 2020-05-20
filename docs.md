@@ -85,7 +85,10 @@ Response body
 
 ### Optional Query Params
  
-filter   : `comma separated string`  
+category   : `string` 
+price: `lower range number, higher range number` e.g `200,300`  
+city: `string`  
+state: `string`   
 page : `number`  
 
 ### Response on success
