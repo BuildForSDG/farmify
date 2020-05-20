@@ -63,7 +63,10 @@ const router = express.Router();
 
 
 router.get('/all', [
-  query('filter').isString().trim().escape(),
+  query('category').isString().trim().escape(),
+  query('city').isString().trim().escape(),
+  query('state').isString().trim().escape(),
+  query('price').isString().trim().escape(),
   query('page').isNumeric().trim().escape(),
 ], store.fetchAll);
 

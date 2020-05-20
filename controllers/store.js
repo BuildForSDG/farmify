@@ -1,8 +1,9 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 /* eslint-disable camelcase */
 const { validationResult } = require('express-validator');
-const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 const passport = require('passport');
 const debug = require('debug')('farmify-server:server');
 const db = require('../db');
@@ -11,21 +12,21 @@ module.exports = {
   fetchAll(req, res, next) {
     try
     {
-      const { page, filter } = req.query;
+      const {
+        page, category, price, city, state,
+      } = req.query;
       const offset = typeof page === 'number' ? +page * 20 : 0;
       const limit = 20;
       const errors = validationResult(req);
-      let query;
-      let params = [filter, offset, limit];
-      if (errors.isEmpty())
-      {
-        query = 'SELECT *, COUNT(*) FROM products WHERE category in ($1)  GROUP BY id, name, category, farmer_id, available, availability, stock, price, img_url ORDER BY name OFFSET  $2 LIMIT  $3';
-      }
-      else
-      {
-        params = [offset, limit];
-        query = 'SELECT *, COUNT(*) FROM products GROUP BY id, name, category, farmer_id, available, availability, stock, price, img_url ORDER BY name OFFSET $1 LIMIT  $2';
-      }
+      priceArray = price.split(',');
+      const params = [`%${category || ''}%`, price ? priceArray[0] : 0, price ? priceArray[1] : 500000, `%${city || ''}%`, `%${state || ''}%`, offset, limit];
+      const query = `SELECT products.id, name, category, farmer_id, available, availability, stock, price, img_url, COUNT(*) FROM products JOIN users ON products.farmer_id = users.id WHERE products.id >= 0
+               AND category LIKE $1
+               AND (price >= $2 OR price <= $3)
+               AND city LIKE $4
+               AND state LIKE $5 
+               GROUP BY products.id, users.id, name, category, farmer_id, available, availability, stock, price, img_url ORDER BY name OFFSET  $6 LIMIT  $7`;
+
       db.query(query, params, (err, result) => {
         if (err)
         {
@@ -38,10 +39,12 @@ module.exports = {
         res.setHeader('ContentType', 'application/json');
         res.status(200).send({
           data: result.rows,
-          nextPage: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? `http://localhost:3000/store/all?page=${nextPage}&filter=${filter}`
-            : `https://calm-eyrie-12411.herokuapp.com/products/all?page=${nextPage}&filter=${filter}`,
-          prevPage: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? `http://localhost:3000/store/all?page=${prevPage}&filter=${filter}`
-            : `https://calm-eyrie-12411.herokuapp.com/products/all?page=${prevPage}&filter=${filter}`,
+          nextPage: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
+            ? (nextPage ? `http://localhost:3000/store/all?page=${nextPage}${category ? `&category=${category}` : ''}${price ? `&price=${price}` : ''}${city ? `&city=${city}` : ''}${state ? `&state=${state}` : ''}` : null)
+            : (nextPage ? `https://calm-eyrie-12411.herokuapp.com/products/all?page=${nextPage}${category ? `&category=${category}` : ''}${price ? `&price=${price}` : ''}${city ? `&city=${city}` : ''}${state ? `&state=${state}` : ''}` : null),
+          prevPage: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
+            ? (prevPage ? `http://localhost:3000/store/all?page=${prevPage}${category ? `&category=${category}` : ''}${price ? `&price=${price}` : ''}${city ? `&city=${city}` : ''}${state ? `&state=${state}` : ''}` : null)
+            : (prevPage ? `https://calm-eyrie-12411.herokuapp.com/products/all?page=${prevPage}${category ? `&category=${category}` : ''}${price ? `&price=${price}` : ''}${city ? `&city=${city}` : ''}${state ? `&state=${state}` : ''}` : null),
 
         });
         return null;
@@ -93,7 +96,8 @@ module.exports = {
         const {
           name, category, farmer_id, availability, available, stock, price,
         } = req.body;
-        const img_url = `https://calm-eyrie-12411.herokuapp.com/${req.file.path}`;
+        const filePath = req.file.path.replace(new RegExp(`[\\${path.sep}]`, 'g'), '/').match(/public[/\w+-\d+.]+/g)[0];
+        const img_url = `https://calm-eyrie-12411.herokuapp.com/${filePath}`;
         res.setHeader('Content-Type', 'application/json');
         db.query('INSERT INTO products (name, category, farmer_id, available, availability, stock, price, img_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
           [name, category, farmer_id, available, availability, stock, price, img_url],
